@@ -1,20 +1,12 @@
 #!/usr/bin/env python3
-from math import pi
-from typing import List
-
 import cv2
-
-from gazebo_msgs.srv import GetModelState
-from gazebo_msgs.msg import ModelState
-from sensor_msgs.msg import CameraInfo
+import message_filters
 import rospy
-import numpy as np
-import tf2_ros
-import tf.transformations
-from bb_msgs.msg import DetectedObject, DetectedObjects
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import CompressedImage
-import message_filters
+
+from bb_msgs.msg import DetectedObjects
+
 # moves object randomly in defined region
 
 class DetectedObjectsVisualizer:

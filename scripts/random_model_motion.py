@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 from math import pi
 
-from gazebo_msgs.srv import SetModelState
-from gazebo_msgs.msg import ModelState
-from geometry_msgs.msg import Pose, Twist, Vector3, Quaternion, Point
-import rospy
 import numpy as np
-from tf.transformations import quaternion_from_euler
+import rospy
 import tf2_ros
+from gazebo_msgs.msg import ModelState
+from gazebo_msgs.srv import SetModelState
+from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
+from tf.transformations import quaternion_from_euler
+
 # moves object randomly in defined region
 
 
@@ -22,11 +23,9 @@ class ObjectMotion:
         self.v_lim = np.array([vx, vy, vz, vroll, vpitch, vyaw])
         self.X = np.array([(x_min + x_max) / 2, (y_min + y_max) / 2, (z_min + z_max) / 2,
                            (roll_min + roll_max) / 2, (pitch_min + pitch_max) / 2, (yaw_min + yaw_max) / 2, 0, 0, 0, 0, 0, 0])
-        self.min = np.array(
-            [x_min, y_min, z_min, roll_min, pitch_min, yaw_min])
-        self.max = np.array(
-            [x_max, y_max, z_max, roll_max, pitch_max, yaw_max])
-        self.mean = np.array([x_max+x_min, y_max + y_min, z_max + z_min,
+        self.min = np.array([x_min, y_min, z_min, roll_min, pitch_min, yaw_min])
+        self.max = np.array([x_max, y_max, z_max, roll_max, pitch_max, yaw_max])
+        self.mean = np.array([x_max + x_min, y_max + y_min, z_max + z_min,
                              roll_max + roll_min, pitch_max + pitch_min, yaw_max + yaw_min]) / 2
         self.parent_link = parent
         self.child_link = child
@@ -61,34 +60,17 @@ class ObjectMotion:
 
     def publish_state(self):
         rospy.wait_for_service('/gazebo/set_model_state', 1.0)
-        set_state = rospy.ServiceProxy(
-            '/gazebo/set_model_state', SetModelState)
+        set_state = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
         pose = Pose(
-            position=Point(
-                x=self.X[0],
-                y=self.X[1],
-                z=self.X[2]
-            ),
-            orientation=Quaternion(*quaternion_from_euler(
-                self.X[3],
-                self.X[4],
-                self.X[5]
-            ))
+            position=Point(x=self.X[0], y=self.X[1], z=self.X[2]),
+            orientation=Quaternion(*quaternion_from_euler(self.X[3], self.X[4], self.X[5]))
         )
         set_state(ModelState(
             model_name=self.child_link,
             pose=pose,
             twist=Twist(
-                linear=Vector3(
-                    x=self.X[6],
-                    y=self.X[7],
-                    z=self.X[8]
-                ),
-                angular=Vector3(
-                    x=self.X[9],
-                    y=self.X[10],
-                    z=self.X[11]
-                )
+                linear=Vector3(x=self.X[6], y=self.X[7], z=self.X[8]),
+                angular=Vector3(x=self.X[9], y=self.X[10], z=self.X[11])
             ),
             reference_frame=self.parent_link
         ))
