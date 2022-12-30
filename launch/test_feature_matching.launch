@@ -1,0 +1,30 @@
+<launch>
+    <node pkg="simulation_utils" type="random_model_motion.py" name="auv4_motion" />
+    <node pkg="simulation_utils" type="publish_gt_detected_objects.py" name="publish_gt_detected_objects" output="screen" />
+
+    <!-- <node pkg="simulation_utils" type="visualize_detected_objects.py" name="visualize_gt_detected_objects" output="screen">
+        <param name="detected_objects_topic" value="/detected_objects" />
+        <param name="camera_image_topic" value="/auv4/front_cam/image_rect_color/compressed" />
+        <param name="output_topic" value="/auv4/front_cam/visualize/compressed" />
+    </node> -->
+
+    <node pkg="image_matching" type="pose_estimator_node.py" name="estimate_bootlegger_pose" output="screen">
+        <param name="camera_topic" value="/auv4/front_cam/image_color/compressed" />
+        <!-- <param name="matcher" value="coarse_loftr" /> -->
+        <!-- <param name="matcher" value="fast_bf" /> -->
+        <param name="matcher" value="superpoint_superglue" />
+        <!-- <param name="matcher" value="coarse_loftr" /> -->
+        <!-- <param name="matcher" value="sift_flann" /> -->
+        <!-- <param name="matcher" value="superpoint_bf" /> -->
+        <param name="camera_info_topic" value="/auv4/front_cam/camera_info" />
+        <param name="visualization_topic" value="/visualization/compressed" />
+        <param name="template" value="Bootlegger" />
+        <param name="detected_objects_topic" value="/detected_objects" />
+    </node>
+    <!-- <node pkg="image_matching" type="detector.py" name="detect_bootlegger" output="screen">
+        <param name="camera_topic" value="/auv4/front_cam/image_color/compressed" />
+        <param name="visualization_topic" value="/visualization/compressed" />
+        <param name="template" value="Bootlegger" />
+        <param name="detected_objects_topic" value="/detected_objects" />
+    </node> -->
+</launch>
