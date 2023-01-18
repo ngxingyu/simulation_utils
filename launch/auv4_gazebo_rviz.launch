@@ -1,0 +1,11 @@
+<!-- 
+View all models within rviz to support running without gzclient
+Requires the following dependencies
+  https://github.com/andreasBihlmaier/pysdf.git
+  https://github.com/andreasBihlmaier/gazebo2rviz.git
+-->
+<launch>
+  <include file="$(find gazebo2rviz)/launch/gazebo2tf.launch" />
+  <include file="$(find gazebo2rviz)/launch/gazebo2marker.launch" />
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find simulation_utils)/rviz/auv4.rviz" />
+</launch>
