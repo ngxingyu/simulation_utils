@@ -5,7 +5,11 @@ Requires the following dependencies
   https://github.com/andreasBihlmaier/gazebo2rviz.git
 -->
 <launch>
-  <include file="$(find gazebo2rviz)/launch/gazebo2tf.launch" />
-  <include file="$(find gazebo2rviz)/launch/gazebo2marker.launch" />
+  <env name="GAZEBO_RESOURCE_PATH" value="$(find bbauv_gazebo_worlds)/media:$(optenv GAZEBO_RESOURCE_PATH)" />
+  <env name="GAZEBO_MODEL_PATH" value="$(find bbauv_gazebo_worlds)/models:$(optenv GAZEBO_MODEL_PATH)" />
+  <arg name="world" default="robosub_2022_pool"/>
+  <include file="$(find gazebo2rviz)/launch/gazebo2rviz.launch">
+    <arg name="worldfile" value="$(find bbauv_gazebo_worlds)/worlds/$(arg world).world"/>
+  </include>
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find simulation_utils)/rviz/auv4.rviz" />
 </launch>
