@@ -15,7 +15,7 @@ from tf.transformations import quaternion_from_euler
 class ObjectMotion:
     def __init__(self, child, parent, child_tf=None, parent_tf=None, x_min=-3, x_max=-3, y_min=-3, y_max=-3, z_min=0, z_max=2,
                  roll_min=-pi/5, roll_max=pi/5, pitch_min=-pi/5, pitch_max=pi/5, yaw_min=-pi/5, yaw_max=pi/5,
-                 vx=0.02, vy=0.02, vz=0.02, vroll=pi/30, vpitch=pi/30, vyaw=pi/30):
+                 vx=0.04, vy=0.04, vz=0.04, vroll=pi/30, vpitch=pi/30, vyaw=pi/30):
         if child_tf is None:
             child_tf = child
         if parent_tf is None:
@@ -33,6 +33,7 @@ class ObjectMotion:
         self.child_tf = child_tf
         self.br = tf2_ros.TransformBroadcaster()
         self.transform_stamped = tf2_ros.TransformStamped()
+        self.seq=0
 
     def start(self):
         self.timer = rospy.Timer(rospy.Duration(0.1), self.update)
@@ -86,16 +87,58 @@ if __name__ == "__main__":
     # motion = ObjectMotion("auv4", "robosub_torpedo_bootlegger", "auv4/base_link", "robosub_torpedo_bootlegger", y_min=-4, y_max=-1, x_min=-3, x_max=3, z_min=0.7, z_max=2,
     #                       roll_min=-pi/9, roll_max=pi/9, pitch_min=-pi/9, pitch_max=pi/9, yaw_min=-pi/9 + pi/2, yaw_max=pi/9 + pi/2,
     #                       vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+    # motion = ObjectMotion("auv4",
+    #                       "robosub_torpedo_bootlegger",
+    #                       "auv4/base_link",
+    #                       "robosub_torpedo_bootlegger",
+    #                       x_min=-0.5, x_max=0.5,
+    #                       y_min=-1.5, y_max=-4,
+    #                       z_min=0.7, z_max=2,
+    #                       roll_min=-pi/9, roll_max=-pi/18,
+    #                       pitch_min=-pi/18, pitch_max=-pi/18,
+    #                       yaw_min=pi/2-pi/6, yaw_max=pi/2 + pi/6,
+    #                       vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+
+    # motion = ObjectMotion("auv4",
+    #                     "robosub23_gate",
+    #                     "auv4/base_link",
+    #                     "robosub23_gate",
+    #                     # x_min=-4, x_max=1,
+    #                     # y_min=-4, y_max=-2,
+    #                     # z_min=-2, z_max=1,
+    #                     x_min = -1.7, y_min=-4, z_min=-0.5, x_max=1.7, y_max=-0.5, z_max=1.5,
+    #                     roll_min=-pi/9, roll_max=pi/9,
+    #                     pitch_min=-pi/18, pitch_max=pi/18,
+    #                     yaw_min=-pi/6 + pi/4 + 0.846967, yaw_max=pi/6 + pi/4 + 0.846967,
+    #                     vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+    # motion = ObjectMotion("auv4",
+    #                 "robosub23_buoy_v2",
+    #                 "auv4/base_link",
+    #                 "robosub23_buoy_v2",
+    #                 x_min = -1.2, y_min=-7, z_min=-0.5, x_max=1.2, y_max=-0.8, z_max=1.5,
+    #                 roll_min=-pi/9, roll_max=pi/9,
+    #                 pitch_min=-pi/18, pitch_max=pi/18,
+    #                 yaw_min=-pi/6 + pi/4 +0.846967, yaw_max=pi/6 + pi/4 +0.846967,
+    #                 vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+
     motion = ObjectMotion("auv4",
-                          "robosub_torpedo_bootlegger",
-                          "auv4/base_link",
-                          "robosub_torpedo_bootlegger",
-                          x_min=-0.5, x_max=0.5,
-                          y_min=-1.5, y_max=-4,
-                          z_min=0.7, z_max=2,
-                          roll_min=-pi/9, roll_max=-pi/18,
-                          pitch_min=-pi/18, pitch_max=-pi/18,
-                          yaw_min=pi/2-pi/6, yaw_max=pi/2 + pi/6,
-                          vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+                    "robosub23_buoy_v2",
+                    "auv4/base_link",
+                    "robosub23_buoy_v2",
+                    x_min = -1.2, y_min=1, z_min=-0.5, x_max=1.2, y_max=4, z_max=1.5,
+                    roll_min=-pi/9, roll_max=pi/9,
+                    pitch_min=-pi/18, pitch_max=pi/18,
+                    yaw_min=-pi/6 + pi/4 +pi+0.846967, yaw_max=pi/6 + pi/4  +pi+0.846967,
+                    vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+
+    # motion = ObjectMotion("auv4",
+    #             "path_marker_1",
+    #             "auv4/base_link",
+    #             "path_marker_1",
+    #             x_min = 0, y_min=-3, z_min=0, x_max=0, y_max=-3, z_max=1,
+    #             roll_min=0, roll_max=0,
+    #             pitch_min=pi/18, pitch_max=pi/18,
+    #             yaw_min=pi/2, yaw_max=pi/2,
+    #             vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
     motion.start()
     rospy.spin()
