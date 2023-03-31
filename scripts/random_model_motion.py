@@ -122,14 +122,33 @@ if __name__ == "__main__":
     #                 vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
 
     motion = ObjectMotion("auv4",
-                    "robosub23_buoy_v2",
+                    "robosub23_torpedo_panel_v2",
                     "auv4/base_link",
-                    "robosub23_buoy_v2",
-                    x_min = -1.2, y_min=1, z_min=-0.5, x_max=1.2, y_max=4, z_max=1.5,
+                    "robosub23_torpedo_panel_v2",
+                    x_min = -1.2, y_min=0.3, z_min=-0.1, x_max=1.2, y_max=1, z_max=1.5,
                     roll_min=-pi/9, roll_max=pi/9,
                     pitch_min=-pi/18, pitch_max=pi/18,
                     yaw_min=-pi/6 + pi/4 +pi+0.846967, yaw_max=pi/6 + pi/4  +pi+0.846967,
                     vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+    # motion = ObjectMotion("auv4",
+    #             "robosub23_torpedo_panel_v1",
+    #             "auv4/base_link",
+    #             "robosub23_torpedo_panel_v1",
+    #             x_min = -1.2, y_min=-2, z_min=-0.5, x_max=1.2, y_max=-1, z_max=1.5,
+    #             roll_min=-pi/9, roll_max=pi/9,
+    #             pitch_min=-pi/18, pitch_max=pi/18,
+    #             yaw_min=-pi/6 + pi/4+0.846967, yaw_max=pi/6 + pi/4+0.846967,
+    #             vyaw=pi/40, vroll=pi/40, vpitch=pi/40)
+
+    # motion = ObjectMotion("auv4",
+    #                 "robosub23_octagon",
+    #                 "auv4/base_link",
+    #                 "robosub23_octagon",
+    #                 x_min = -0.7, y_min=-0.7, z_min=-2.9, x_max=0.7, y_max=0.7, z_max=-1,
+    #                 roll_min=-pi/9, roll_max=pi/9,
+    #                 pitch_min=-pi/18, pitch_max=pi/18,
+    #                 yaw_min=-pi, yaw_max=pi,
+    #                 vyaw=pi/4, vroll=pi/40, vpitch=pi/40)
 
     # motion = ObjectMotion("auv4",
     #             "path_marker_1",
